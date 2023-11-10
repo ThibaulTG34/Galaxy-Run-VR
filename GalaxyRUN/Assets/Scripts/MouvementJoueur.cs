@@ -27,6 +27,23 @@ public class MouvementJoueur : MonoBehaviour
     void Update()
     {
         mouvement = new Vector3(Input.GetAxisRaw("Vertical"), 0, -Input.GetAxisRaw("Horizontal"));
+       
+        //recuperation des valeurs des axes horizontal et vertical 
+        //et stockage dans un Vector3
+        //mouvement = new Vector3(Input.GetAxisRaw("Horizontal"), 0, Input.GetAxisRaw("Vertical"));
+        //tient compte de la rotation du joueur
+        mouvement = transform.TransformDirection(mouvement);
+        //on multiplie le vector3 par la vitesse de deplacement
+        mouvement *= speed;
+        //si la touche ESPACE est pressee
+        /*if (Input.GetButton("Jump"))
+        {
+            //on dit que notre point sur l'axe y augmente de la valeur de jumpSpeed 
+            mouvement.y = jumpSpeed;
+        }*/
+        
+        //ici on effectue la rotation de notre joueur s'il glisse la souris a gauche ou a droite
+        //transform.Rotate(Vector3.up, Input.GetAxis("Mouse X") * Time.deltaTime * speed * sensi);
 
         player.gameObject.transform.Rotate(mouvement * Rotatespeed);
         player.Move(Vector3.forward * speed);
