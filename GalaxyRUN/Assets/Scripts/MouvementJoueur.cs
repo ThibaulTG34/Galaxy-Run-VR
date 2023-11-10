@@ -6,7 +6,8 @@ using UnityEngine;
 public class MouvementJoueur : MonoBehaviour
 {
     //declaration des variables
-    public float speed = 6f;
+    public float speed = 0.0001f;
+    public float Rotatespeed = 0.005f;
     public float jumpSpeed = 8f;
     public float gravity = 20f;
     public Camera cam;
@@ -25,10 +26,11 @@ public class MouvementJoueur : MonoBehaviour
 
     void Update()
     {
+        mouvement = new Vector3(Input.GetAxisRaw("Vertical"), 0, -Input.GetAxisRaw("Horizontal"));
        
         //recuperation des valeurs des axes horizontal et vertical 
         //et stockage dans un Vector3
-        mouvement = new Vector3(Input.GetAxisRaw("Horizontal"), 0, Input.GetAxisRaw("Vertical"));
+        //mouvement = new Vector3(Input.GetAxisRaw("Horizontal"), 0, Input.GetAxisRaw("Vertical"));
         //tient compte de la rotation du joueur
         mouvement = transform.TransformDirection(mouvement);
         //on multiplie le vector3 par la vitesse de deplacement
@@ -43,12 +45,7 @@ public class MouvementJoueur : MonoBehaviour
         //ici on effectue la rotation de notre joueur s'il glisse la souris a gauche ou a droite
         //transform.Rotate(Vector3.up, Input.GetAxis("Mouse X") * Time.deltaTime * speed * sensi);
 
-        //ici on effectue la rotation de notre joueur s'il glisse la souris en haut ou en bas
-        //Vector3 RotaCamera = new Vector3(Input.GetAxisRaw("Mouse Y"), 0, 0);
-        //cam.transform.Rotate(-RotaCamera);
-
-        //chose la plus importante
-        //on appel la methode Move() qui effectue le mouvement du joueur
-        player.Move(mouvement * Time.deltaTime);
+        player.gameObject.transform.Rotate(mouvement * Rotatespeed);
+        player.Move(Vector3.forward * speed);
     }
 }
