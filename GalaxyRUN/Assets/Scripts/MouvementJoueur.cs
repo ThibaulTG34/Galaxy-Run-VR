@@ -25,26 +25,21 @@ public class MouvementJoueur : MonoBehaviour
 
     void Update()
     {
-        //si le joueur est au sol
-        if (player.isGrounded)
+       
+        //recuperation des valeurs des axes horizontal et vertical 
+        //et stockage dans un Vector3
+        mouvement = new Vector3(Input.GetAxisRaw("Horizontal"), 0, Input.GetAxisRaw("Vertical"));
+        //tient compte de la rotation du joueur
+        mouvement = transform.TransformDirection(mouvement);
+        //on multiplie le vector3 par la vitesse de deplacement
+        mouvement *= speed;
+        //si la touche ESPACE est pressee
+        /*if (Input.GetButton("Jump"))
         {
-            //recuperation des valeurs des axes horizontal et vertical 
-            //et stockage dans un Vector3
-            mouvement = new Vector3(Input.GetAxisRaw("Horizontal"), 0, Input.GetAxisRaw("Vertical"));
-            //tient compte de la rotation du joueur
-            mouvement = transform.TransformDirection(mouvement);
-            //on multiplie le vector3 par la vitesse de deplacement
-            mouvement *= speed;
-            //si la touche ESPACE est pressee
-            /*if (Input.GetButton("Jump"))
-            {
-                //on dit que notre point sur l'axe y augmente de la valeur de jumpSpeed 
-                mouvement.y = jumpSpeed;
-            }*/
-        }
-        //maintenant si le joueur est en l'air
-        //on le soumet a la gravite
-        mouvement.y -= gravity * Time.deltaTime;
+            //on dit que notre point sur l'axe y augmente de la valeur de jumpSpeed 
+            mouvement.y = jumpSpeed;
+        }*/
+        
         //ici on effectue la rotation de notre joueur s'il glisse la souris a gauche ou a droite
         //transform.Rotate(Vector3.up, Input.GetAxis("Mouse X") * Time.deltaTime * speed * sensi);
 
