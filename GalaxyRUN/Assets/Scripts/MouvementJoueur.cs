@@ -1,3 +1,5 @@
+using System.ComponentModel;
+using System.ComponentModel.DataAnnotations.Schema;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -35,7 +37,7 @@ public class MouvementJoueur : MonoBehaviour
         player.gameObject.transform.Rotate(mouvement);
         //player.Move(Vector3.forward * speed * Time.deltaTime);
 
-        if (Input.GetKeyDown("joystick button 0"))
+        if (Input.GetKeyDown("joystick button 0") || Input.GetMouseButtonDown(0))
         {
             GameObject newBullet1 = Instantiate(bullet, bullet1_pos.position, Quaternion.identity) as GameObject;
             Rigidbody rBullet1 = newBullet1.GetComponent<Rigidbody>();
