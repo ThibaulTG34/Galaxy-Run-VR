@@ -39,7 +39,7 @@ public class CheckPointManager : MonoBehaviour
             Respawn.enabled = false;
             progressHoldClick.GetComponent<RectTransform>().localScale = new Vector3(0, progressHoldClick.transform.localScale.y, progressHoldClick.transform.localScale.z);
         }
-
+        
         if (Input.GetKey(KeyCode.R))
         {
             progressHoldClick.GetComponent<RectTransform>().localScale += new Vector3((float)0.0002, 0, 0);

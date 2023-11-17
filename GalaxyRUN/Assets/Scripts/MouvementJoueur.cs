@@ -30,7 +30,7 @@ public class MouvementJoueur : MonoBehaviour
         mouvement = new Vector3(Input.GetAxisRaw("Vertical"), 0, -Input.GetAxisRaw("Horizontal"));
        
         mouvement = transform.TransformDirection(mouvement);
-        //mouvement *= speed;
+        mouvement *= speed;
         player.gameObject.transform.Rotate(mouvement);
 /*        player.Move(Vector3.forward * speed * Time.deltaTime);
 */
