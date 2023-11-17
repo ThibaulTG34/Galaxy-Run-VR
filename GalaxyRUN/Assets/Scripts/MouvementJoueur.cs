@@ -7,8 +7,6 @@ using UnityEngine;
 
 public class MouvementJoueur : MonoBehaviour
 {
-    //declaration des variables
-    //public float speed = 0.001f;
     public float Bulletspeed = 200f;
     public float Rotatespeed = 0.09f;
     public float jumpSpeed = 8f;
