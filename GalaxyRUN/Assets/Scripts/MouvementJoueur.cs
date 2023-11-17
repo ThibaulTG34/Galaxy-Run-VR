@@ -32,19 +32,21 @@ public class MouvementJoueur : MonoBehaviour
         mouvement = transform.TransformDirection(mouvement);
         //mouvement *= speed;
         player.gameObject.transform.Rotate(mouvement);
-        player.Move(Vector3.forward * speed * Time.deltaTime);
-
+/*        player.Move(Vector3.forward * speed * Time.deltaTime);
+*/
         if(Input.GetMouseButtonDown(0))
         {
             GameObject newBullet1 = Instantiate(bullet, bullet1_pos.transform.position, Quaternion.identity) as GameObject;
             newBullet1.transform.Rotate(new Vector3(90, 0, 0));
             Rigidbody rBullet1 = newBullet1.GetComponent<Rigidbody>();
-            rBullet1.velocity = bullet1_pos.transform.TransformDirection(-cam.transform.forward) * Bulletspeed;
+            rBullet1.isKinematic = false;
+            rBullet1.velocity = bullet1_pos.transform.TransformDirection(cam.transform.forward) * Bulletspeed;
 
             GameObject newBullet2 = Instantiate(bullet, bullet2_pos.transform.position, Quaternion.identity) as GameObject;
             newBullet2.transform.Rotate(new Vector3(90, 0, 0));
             Rigidbody rBullet2 = newBullet2.GetComponent<Rigidbody>();
-            rBullet2.velocity = bullet2_pos.transform.TransformDirection(-cam.transform.forward) * Bulletspeed;
+            rBullet2.isKinematic = false;
+            rBullet2.velocity = bullet2_pos.transform.TransformDirection(cam.transform.forward) * Bulletspeed;
 
         }
     }
