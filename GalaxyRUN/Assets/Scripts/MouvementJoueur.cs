@@ -16,8 +16,9 @@ public class MouvementJoueur : MonoBehaviour
     private Vector3 mouvement = Vector3.zero;
     CharacterController player;
     public GameObject bullet;
-    public GameObject bullet1_pos;
-    public GameObject bullet2_pos;
+    public Transform bullet1_pos;
+    public Transform bullet2_pos;
+    public AudioSource bulletSound;
 
     void Start()
     {
@@ -32,22 +33,21 @@ public class MouvementJoueur : MonoBehaviour
         mouvement = transform.TransformDirection(mouvement);
         mouvement *= speed;
         player.gameObject.transform.Rotate(mouvement);
-/*        player.Move(Vector3.forward * speed * Time.deltaTime);
-*/
-        if(Input.GetMouseButtonDown(0))
+        //player.Move(Vector3.forward * speed * Time.deltaTime);
+
+        if (Input.GetKeyDown("joystick button 0"))
         {
-            GameObject newBullet1 = Instantiate(bullet, bullet1_pos.transform.position, Quaternion.identity) as GameObject;
-            newBullet1.transform.Rotate(new Vector3(90, 0, 0));
+            GameObject newBullet1 = Instantiate(bullet, bullet1_pos.position, Quaternion.identity) as GameObject;
             Rigidbody rBullet1 = newBullet1.GetComponent<Rigidbody>();
             rBullet1.isKinematic = false;
-            rBullet1.velocity = bullet1_pos.transform.TransformDirection(cam.transform.forward) * Bulletspeed;
+            rBullet1.velocity = bullet1_pos.TransformDirection(Vector3.forward) * Bulletspeed;
 
-            GameObject newBullet2 = Instantiate(bullet, bullet2_pos.transform.position, Quaternion.identity) as GameObject;
-            newBullet2.transform.Rotate(new Vector3(90, 0, 0));
+            GameObject newBullet2 = Instantiate(bullet, bullet2_pos.position, Quaternion.identity) as GameObject;
             Rigidbody rBullet2 = newBullet2.GetComponent<Rigidbody>();
             rBullet2.isKinematic = false;
-            rBullet2.velocity = bullet2_pos.transform.TransformDirection(cam.transform.forward) * Bulletspeed;
+            rBullet2.velocity = bullet2_pos.TransformDirection(Vector3.forward) * Bulletspeed;
 
+            bulletSound.Play();
         }
     }
 
