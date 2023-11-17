@@ -42,12 +42,12 @@ public class CheckPointManager : MonoBehaviour
         {
             Respawn.enabled = true;
         }
-        if (distance > 80 || (float)(progressHoldClick.GetComponent<RectTransform>().localScale.x) >= (float)0.6)
+        /*if (distance > 80 || (float)(progressHoldClick.GetComponent<RectTransform>().localScale.x) >= (float)0.6)
         {
             gameObject.transform.position = new Vector3(positionInitiale.x,transform.position.y,positionInitiale.z);
             Respawn.enabled = false;
             progressHoldClick.GetComponent<RectTransform>().localScale = new Vector3(0, progressHoldClick.transform.localScale.y, progressHoldClick.transform.localScale.z);
-        }
+        }*/
         
         if (Input.GetKey(KeyCode.R) ||Input.GetKey("joystick button 2"))
         {

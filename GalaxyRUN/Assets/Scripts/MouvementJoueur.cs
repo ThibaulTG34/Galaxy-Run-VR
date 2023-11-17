@@ -22,7 +22,7 @@ public class MouvementJoueur : MonoBehaviour
     public Transform bullet2_pos;
     public AudioSource bulletSound;
 
-    public float throttleIncrement = 0.01f;
+    public float throttleIncrement = 0.1f;
     public float maxThrottle = 200f;
     public float responsiveness = 10f;
     private float speed = 5f;
