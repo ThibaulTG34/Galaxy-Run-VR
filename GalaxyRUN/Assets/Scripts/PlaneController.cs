@@ -4,10 +4,10 @@ using UnityEngine;
 
 public class PlaneController : MonoBehaviour
 {
-    public float throttleIncrement = 0.1f;
+    public float throttleIncrement = 0.01f;
     public float maxThrottle = 200f;
     public float responsiveness = 10f;
-
+    private float speed = 5f;
     private float throttle, pitch, yaw, roll;
 
     Rigidbody rb;
@@ -25,7 +25,7 @@ public class PlaneController : MonoBehaviour
         rb = GetComponent<Rigidbody>();
     }
 
-    private void HandleInput()
+    private void HandleInputs()
     {
         roll = Input.GetAxis("Roll");
         pitch = Input.GetAxis("Pitch");
@@ -41,12 +41,12 @@ public class PlaneController : MonoBehaviour
 
     void Update()
     {
-        HandleInput();
+        HandleInputs();
     }
 
     private void FixedUpdate()
     {
-        rb.AddForce(transform.forward * maxThrottle * throttle);
+        rb.AddForce(transform.forward * maxThrottle * throttle * speed);
         rb.AddTorque(transform.up * yaw * responseModifier);
         rb.AddTorque(transform.right * pitch * responseModifier);
         rb.AddTorque(transform.forward * roll * responseModifier);

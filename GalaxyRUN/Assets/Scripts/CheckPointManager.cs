@@ -28,24 +28,33 @@ public class CheckPointManager : MonoBehaviour
 
     void Update()
     {
+
+        for (int i = 0; i < 20; i++)
+        {
+            if (Input.GetKeyDown("joystick button " + i))
+            {
+                Debug.Log("Button " + i + " was pressed!");
+            }
+        }
+
         float distance = Vector3.Distance(listeCheckPoints[nextCheckpoint].transform.position, gameObject.transform.position);
         if (distance > 40)
         {
             Respawn.enabled = true;
         }
-        if (distance > 80 || (float)(progressHoldClick.GetComponent<RectTransform>().localScale.x) >= (float)0.12)
+        if (distance > 80 || (float)(progressHoldClick.GetComponent<RectTransform>().localScale.x) >= (float)0.6)
         {
             gameObject.transform.position = new Vector3(positionInitiale.x,transform.position.y,positionInitiale.z);
             Respawn.enabled = false;
             progressHoldClick.GetComponent<RectTransform>().localScale = new Vector3(0, progressHoldClick.transform.localScale.y, progressHoldClick.transform.localScale.z);
         }
         
-        if (Input.GetKey(KeyCode.R))
+        if (Input.GetKey(KeyCode.R) ||Input.GetKey("joystick button 2"))
         {
-            progressHoldClick.GetComponent<RectTransform>().localScale += new Vector3((float)0.0002, 0, 0);
+            progressHoldClick.GetComponent<RectTransform>().localScale += new Vector3((float)0.002, 0, 0);
 
         }
-        if (Input.GetKeyUp(KeyCode.R))
+        if (Input.GetKeyUp(KeyCode.R) || Input.GetKeyUp("joystick button 2"))
         {
             progressHoldClick.GetComponent<RectTransform>().localScale = new Vector3(0, progressHoldClick.transform.localScale.y, progressHoldClick.transform.localScale.z);
 
