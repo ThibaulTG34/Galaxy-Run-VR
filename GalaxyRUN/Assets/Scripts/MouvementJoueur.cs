@@ -21,10 +21,11 @@ public class MouvementJoueur : MonoBehaviour
     public AudioSource bulletSound;
 
     public float throttleIncrement = 0.1f;
+    [SerializeField]
     public float maxThrottle = 200f;
     public float responsiveness = 10f;
     private float speed = 5f;
-    private float throttle, pitch, yaw, roll;
+    private float throttle = 20f, pitch, yaw, roll;
 
     Rigidbody rb;
 
@@ -47,12 +48,18 @@ public class MouvementJoueur : MonoBehaviour
         pitch = Input.GetAxis("Pitch");
         yaw = Input.GetAxis("Yaw");
 
-        if (Input.GetKey(KeyCode.Space))
+        if (Input.GetKey(KeyCode.X))
+        {
+            Debug.Log("X");
             throttle += throttleIncrement;
-        else if (Input.GetKey(KeyCode.LeftControl))
+        }
+        else if (Input.GetKey(KeyCode.T))
+        {
+            Debug.Log("T");
             throttle -= throttleIncrement;
+        }
 
-        throttle = Mathf.Clamp(throttle, 0f, 100f);
+        //throttle = 20f;
     }
 
     void Start()
