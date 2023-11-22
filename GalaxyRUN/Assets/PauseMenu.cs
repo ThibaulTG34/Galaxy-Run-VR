@@ -12,7 +12,8 @@ public class PauseMenu : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (Input.GetKeyDown(KeyCode.JoystickButton1)) // TODO check button
+        //if (Input.GetKeyDown(KeyCode.JoystickButton1)) // TODO check button
+        if (Input.GetKeyDown(KeyCode.Escape))
         {
             if (gameIsPaused)
             {
