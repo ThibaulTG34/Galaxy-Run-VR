@@ -10,7 +10,7 @@ public class CheckPointManager : MonoBehaviour
     [SerializeField] GameObject progressHoldClick;
     int nextCheckpoint = 0;
     Vector3 positionInitiale;
-
+    public GameObject mj;
 
     // Start is called before the first frame update
     void Start()
@@ -24,6 +24,7 @@ public class CheckPointManager : MonoBehaviour
         }
 
         listeCheckPoints[0].SetActive(true);
+
     }
 
     void Update()
@@ -67,7 +68,7 @@ public class CheckPointManager : MonoBehaviour
         if (nextCheckpoint == listeCheckPoints.Count - 1)
         {
             other.gameObject.SetActive(false);
-            Debug.Log("Bravo Pelo !");
+            mj.GetComponent<MouvementJoueur>().enabled = false;
         }
         else
         {
