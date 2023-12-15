@@ -2,7 +2,6 @@ using JetBrains.Annotations;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using static UnityEditor.FilePathAttribute;
 using UnityEngine.UI;
 using UnityEngine.SceneManagement;
 
@@ -23,7 +22,7 @@ public class Ship_Choice : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        actual_ship = 1;
+        actual_ship = 4;
     }
 
     // Update is called once per frame
@@ -85,13 +84,14 @@ public class Ship_Choice : MonoBehaviour
         if (Input.GetKeyUp("joystick button 0") || Input.GetKeyUp(KeyCode.KeypadEnter))
         {
             valider.GetComponent<Graphic>().color = new Color(1, 1, 1, 1);
+            DontDestroyOnLoad(ship_to_keep);
+            Debug.Log(ship_to_keep.name);
             SceneManager.LoadScene("Main", LoadSceneMode.Single);
         }
     }
 
     public static GameObject GetSelectedShip()
     {
-        
         return ship_to_keep;
     }
 }

@@ -11,6 +11,10 @@ public class ChangeWeapons : MonoBehaviour
 
     void Start()
     {
+        GameObject new_ship = Ship_Choice.GetSelectedShip();
+        string str = new_ship.name;
+        bullet = transform.Find(str+"(Clone)/weapons/Image_bullet").gameObject.GetComponent<Image>();
+        rocket = transform.Find(str+"(Clone)/weapons/Image_rocket").gameObject.GetComponent<Image>();
         swapWeapons = false;
     }
 

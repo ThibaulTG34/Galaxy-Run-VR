@@ -6,7 +6,7 @@ using UnityEngine.UI;
 public class CheckPointManager : MonoBehaviour
 {
     [SerializeField] private List<GameObject> listeCheckPoints = new List<GameObject>();
-    [SerializeField] Canvas Respawn;
+    [SerializeField] GameObject Respawn;
     [SerializeField] GameObject progressHoldClick;
     int nextCheckpoint = 0;
     Vector3 positionInitiale;
@@ -14,11 +14,22 @@ public class CheckPointManager : MonoBehaviour
     [SerializeField]
     ParticleSystem speedEffect;
 
+    private void Awake()
+    {
+        
+    }
+
     // Start is called before the first frame update
     void Start()
     {
+        GameObject new_ship = Ship_Choice.GetSelectedShip();
+        string str = new_ship.name;
+        //Debug.Log("ddddddd : "+str);
+        progressHoldClick = transform.Find(str + "(Clone)/Respawn/prgressHoldClick").gameObject;
+        Respawn = transform.Find(str+ "(Clone)/Respawn").gameObject;
+
         progressHoldClick.GetComponent<RectTransform>().localScale = new Vector3(0, progressHoldClick.transform.localScale.y, progressHoldClick.transform.localScale.z);
-        Respawn.enabled = false;
+        Respawn.SetActive(false);
 
         for (int i = 0; i < listeCheckPoints.Count; i++)
         {
@@ -43,7 +54,7 @@ public class CheckPointManager : MonoBehaviour
         float distance = Vector3.Distance(listeCheckPoints[nextCheckpoint].transform.position, gameObject.transform.position);
         if (distance > 40)
         {
-            Respawn.enabled = true;
+            Respawn.SetActive(true);
         }
         /*if (distance > 80 || (float)(progressHoldClick.GetComponent<RectTransform>().localScale.x) >= (float)0.6)
         {
@@ -51,7 +62,7 @@ public class CheckPointManager : MonoBehaviour
             Respawn.enabled = false;
             progressHoldClick.GetComponent<RectTransform>().localScale = new Vector3(0, progressHoldClick.transform.localScale.y, progressHoldClick.transform.localScale.z);
         }*/
-        
+
         if (Input.GetKey(KeyCode.R) ||Input.GetKey("joystick button 2"))
         {
             progressHoldClick.GetComponent<RectTransform>().localScale += new Vector3((float)0.002, 0, 0);
@@ -68,7 +79,7 @@ public class CheckPointManager : MonoBehaviour
     {
 
         speedEffect.Play(false);
-        mj.GetComponent<MouvementJoueur>().speed *= 10f;
+        mj.GetComponent<MouvementJoueur>().speed *= 5f;
 
         if (nextCheckpoint == listeCheckPoints.Count - 1)
         {

@@ -11,7 +11,7 @@ public class MouvementJoueur : MonoBehaviour
     public float Rotatespeed = 0.09f;
     public float jumpSpeed = 8f;
     public float gravity = 20f;
-    public Camera cam;
+    public GameObject cam;
     public float sensi = 30f;
     private Vector3 mouvement = Vector3.zero;
     CharacterController player;
@@ -29,6 +29,9 @@ public class MouvementJoueur : MonoBehaviour
 
     Rigidbody rb;
 
+    [SerializeField]
+    GameObject ship;
+
     private float responseModifier
     {
         get
@@ -40,6 +43,17 @@ public class MouvementJoueur : MonoBehaviour
     void Awake()
     {
         rb = GetComponent<Rigidbody>();
+        Destroy(ship);
+        GameObject new_ship = Ship_Choice.GetSelectedShip();
+        ship = Instantiate(new_ship, ship.transform.position, ship.transform.rotation);
+        ship.transform.parent = gameObject.transform;
+        Debug.Log("apres selection : "+ship.name);
+        string str = ship.name;
+        //Debug.Log("cam_pos : " + transform.Find(str+"/cam_pos").position);
+        Transform cam_pos = transform.Find(str+"/cam_pos");
+        cam.transform.position = cam_pos.position;
+        bullet1_pos = transform.Find(str+"/bullet1_pos");
+        bullet2_pos = transform.Find(str+"/bullet2_pos");
     }
 
     private void HandleInputs()
