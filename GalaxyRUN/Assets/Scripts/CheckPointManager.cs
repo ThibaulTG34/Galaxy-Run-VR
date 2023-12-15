@@ -11,6 +11,8 @@ public class CheckPointManager : MonoBehaviour
     int nextCheckpoint = 0;
     Vector3 positionInitiale;
     public GameObject mj;
+    [SerializeField]
+    ParticleSystem speedEffect;
 
     // Start is called before the first frame update
     void Start()
@@ -22,7 +24,7 @@ public class CheckPointManager : MonoBehaviour
         {
             listeCheckPoints[i].SetActive(false);
         }
-
+        speedEffect.Stop();
         listeCheckPoints[0].SetActive(true);
 
     }
@@ -64,6 +66,9 @@ public class CheckPointManager : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
+
+        speedEffect.Play(false);
+        mj.GetComponent<MouvementJoueur>().speed *= 10f;
 
         if (nextCheckpoint == listeCheckPoints.Count - 1)
         {

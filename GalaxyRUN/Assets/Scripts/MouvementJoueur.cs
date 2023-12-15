@@ -24,7 +24,7 @@ public class MouvementJoueur : MonoBehaviour
     [SerializeField]
     public float maxThrottle = 200f;
     public float responsiveness = 10f;
-    private float speed = 5f;
+    public float speed = 7f;
     private float throttle = 20f, pitch, yaw, roll;
 
     Rigidbody rb;
