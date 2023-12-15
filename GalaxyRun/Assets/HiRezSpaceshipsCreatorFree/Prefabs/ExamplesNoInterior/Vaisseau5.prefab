@@ -10,7 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 6391839290496714497}
   m_Layer: 0
-  m_Name: Example3NoInterior_Red
+  m_Name: Vaisseau5
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
