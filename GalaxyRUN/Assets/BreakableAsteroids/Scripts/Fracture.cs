@@ -7,9 +7,14 @@ public class Fracture : MonoBehaviour
     [Tooltip("\"Fractured\" is the object that this will break into")]
     public GameObject fractured;
 
-    public void FractureObject()
+    public void OnCollisionEnter(Collision collision)
     {
-        Instantiate(fractured, transform.position, transform.rotation); //Spawn in the broken version
-        Destroy(gameObject); //Destroy the object to stop it getting in the way
+        if(collision.gameObject.tag == "bullet")
+        {
+            Instantiate(fractured, transform.position, transform.rotation);
+            Destroy(collision.gameObject);
+            Destroy(gameObject);
+        }
+        
     }
 }
