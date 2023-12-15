@@ -82,6 +82,7 @@ public class MouvementJoueur : MonoBehaviour
         if (Input.GetKeyDown("joystick button 0") || Input.GetMouseButtonDown(0))
         {
             GameObject newBullet1 = Instantiate(bullet, bullet1_pos.position, Quaternion.identity) as GameObject;
+            newBullet1.transform.Rotate(new Vector3(0, 0, 0));
             Rigidbody rBullet1 = newBullet1.GetComponent<Rigidbody>();
             rBullet1.isKinematic = false;
             rBullet1.velocity = (bullet1_pos.TransformDirection(Vector3.forward) * Bulletspeed);
