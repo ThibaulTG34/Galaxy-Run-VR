@@ -79,7 +79,7 @@ public class CheckPointManager : MonoBehaviour
     {
 
         speedEffect.Play(false);
-        mj.GetComponent<MouvementJoueur>().speed *= 5f;
+        mj.GetComponent<MouvementJoueur>().speed *= 11f;
 
         if (nextCheckpoint == listeCheckPoints.Count - 1)
         {
