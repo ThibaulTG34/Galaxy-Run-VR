@@ -8,12 +8,11 @@ public class PauseMenu : MonoBehaviour
     public static bool gameIsPaused = false;
 
     public GameObject pauseMenuUI;
+    public GameObject mj;
 
-    // Update is called once per frame
     void Update()
     {
-        //if (Input.GetKeyDown(KeyCode.JoystickButton1)) // TODO check button
-        if (Input.GetKeyDown(KeyCode.Escape))
+        if (Input.GetKeyDown("joystick button 10"))
         {
             if (gameIsPaused)
             {
@@ -29,33 +28,31 @@ public class PauseMenu : MonoBehaviour
 
     public void Resume()
     {
-        Debug.Log("resume...");
+        if(decompteScript.nb == -1)
+            mj.GetComponent<MouvementJoueur>().enabled = true;
         pauseMenuUI.SetActive(false);
         Time.timeScale = 1f; // normal rate
-        //MouvementJoueur.speed = 0.0001f;
         gameIsPaused = false;
     }
 
     public void Pause()
     {
-        Debug.Log("pause...");
+        if (decompteScript.nb == -1)
+            mj.GetComponent<MouvementJoueur>().enabled = false;
         pauseMenuUI.SetActive(true); // display pause menu
         Time.timeScale = 0f; // freeze game
-        //MouvementJoueur.speed = 0.0f;
         gameIsPaused = true;
 
     }
 
     public void RestartGame()
     {
-        Debug.Log("restarting game...");
-        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
+        SceneManager.LoadScene("ChoixVaisseau");
         Time.timeScale = 1f; // normal speed
     }
 
     public void QuitGame()
     {
-        Debug.Log("quitting game...");
         Application.Quit();
     }
 }

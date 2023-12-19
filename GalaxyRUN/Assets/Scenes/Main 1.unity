@@ -2050,6 +2050,10 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 1713746774}
     - target: {fileID: 8828048105325025832, guid: 7f80301709a6ddd4690cb8d1fd736e35, type: 3}
+      propertyPath: rocket
+      value: 
+      objectReference: {fileID: 132654, guid: 3db888a07c8c1ae42b3ff9ff707231d0, type: 3}
+    - target: {fileID: 8828048105325025832, guid: 7f80301709a6ddd4690cb8d1fd736e35, type: 3}
       propertyPath: maxThrottle
       value: 500
       objectReference: {fileID: 0}
@@ -3195,6 +3199,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   decompte: {fileID: 1919593770}
+  mj: {fileID: 0}
 --- !u!1 &1936038731
 GameObject:
   m_ObjectHideFlags: 0

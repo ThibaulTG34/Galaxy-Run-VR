@@ -16,9 +16,11 @@ public class MouvementJoueur : MonoBehaviour
     private Vector3 mouvement = Vector3.zero;
     CharacterController player;
     public GameObject bullet;
+    public GameObject rocket;
     public Transform bullet1_pos;
     public Transform bullet2_pos;
     public AudioSource bulletSound;
+    public AudioSource rocketSound;
 
     public float throttleIncrement = 0.1f;
     [SerializeField]
@@ -95,13 +97,22 @@ public class MouvementJoueur : MonoBehaviour
 
         if (Input.GetKeyDown("joystick button 0") || Input.GetMouseButtonDown(0))
         {
-            GameObject newBullet1 = Instantiate(bullet, bullet1_pos.position, Quaternion.identity) as GameObject;
+            GameObject objet;
+            if(!ChangeWeapons.swapWeapons)
+            {
+                objet = bullet;
+            }
+            else
+            {
+                objet = rocket;
+            }
+            GameObject newBullet1 = Instantiate(objet, bullet1_pos.position, bullet1_pos.rotation) as GameObject;
             newBullet1.transform.Rotate(new Vector3(0, 0, 0));
             Rigidbody rBullet1 = newBullet1.GetComponent<Rigidbody>();
             rBullet1.isKinematic = false;
             rBullet1.velocity = (bullet1_pos.TransformDirection(Vector3.forward) * Bulletspeed);
 
-            GameObject newBullet2 = Instantiate(bullet, bullet2_pos.position, Quaternion.identity) as GameObject;
+            GameObject newBullet2 = Instantiate(objet, bullet2_pos.position, bullet2_pos.rotation) as GameObject;
             Rigidbody rBullet2 = newBullet2.GetComponent<Rigidbody>();
             rBullet2.isKinematic = false;
             rBullet2.velocity = bullet2_pos.TransformDirection(Vector3.forward) * Bulletspeed;

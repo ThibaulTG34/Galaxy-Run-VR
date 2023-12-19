@@ -7,7 +7,7 @@ public class ChangeWeapons : MonoBehaviour
 {
     public Image bullet;
     public Image rocket;
-    private bool swapWeapons;
+    public static bool swapWeapons;
 
     void Start()
     {

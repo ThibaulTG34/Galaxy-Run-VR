@@ -6,7 +6,7 @@ using TMPro;
 
 public class decompteScript : MonoBehaviour
 {
-    int nb = 3;
+    public static int nb = 3;
     public TMP_Text decompte;
     public GameObject mj;
 
@@ -18,20 +18,36 @@ public class decompteScript : MonoBehaviour
     void Update()
     {
         if (nb > -1)
+        {
             StartCoroutine(decompteCoroutine());
+        }
         else
         {
             decompte.text = "Go !";
             mj.GetComponent<MouvementJoueur>().enabled = true;
-            Destroy(gameObject);
+            //Destroy(gameObject);
         }
+
+        /*if (PauseMenu.gameIsPaused)
+        {
+            //StopAllCoroutines();
+            decompte.gameObject.SetActive(false);
+        }
+        else
+        {
+            //StartCoroutine(decompteCoroutine());
+            decompte.gameObject.SetActive(true);
+        }*/
     }
 
     IEnumerator decompteCoroutine()
     {
-        yield return new WaitForSeconds(1f);
-        decompte.text = nb.ToString();
-        nb -= 1;
-        StopAllCoroutines();
+        if (!PauseMenu.gameIsPaused)
+        {
+            yield return new WaitForSeconds(1f);
+            decompte.text = nb.ToString();
+            nb -= 1;
+            StopAllCoroutines();
+        }
     }
 }
