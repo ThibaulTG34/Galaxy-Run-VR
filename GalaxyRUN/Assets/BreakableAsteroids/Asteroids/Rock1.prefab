@@ -227,6 +227,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   fractured: {fileID: 7273956540791742907, guid: 9cb5e7465eef1af4988889e41a071493, type: 3}
+  boom: {fileID: 4916385218278725441}
 --- !u!64 &2615907601388813192
 MeshCollider:
   m_ObjectHideFlags: 0
