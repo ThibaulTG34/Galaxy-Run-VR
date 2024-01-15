@@ -33,11 +33,13 @@ public class MouvementJoueur : MonoBehaviour
     public float maxThrottle = 200f;
     public float responsiveness = 10f;
     public float speed = 7f;
-    private float throttle = 20f, pitch, yaw, roll;
+    private float throttle = 25f, pitch, yaw, roll;
     Rigidbody rb;
 
     [SerializeField]
     GameObject ship;
+
+    public int mode;
 
     private float responseModifier
     {
@@ -49,6 +51,7 @@ public class MouvementJoueur : MonoBehaviour
 
     void Awake()
     {
+        mode = 0;
         rb = GetComponent<Rigidbody>();
         Destroy(ship);
         GameObject new_ship = Ship_Choice.GetSelectedShip();
@@ -68,19 +71,6 @@ public class MouvementJoueur : MonoBehaviour
         roll = Input.GetAxis("Roll");
         pitch = Input.GetAxis("Pitch");
         yaw = Input.GetAxis("Yaw");
-
-        if (Input.GetKey(KeyCode.X))
-        {
-            Debug.Log("X");
-            throttle += throttleIncrement;
-        }
-        else if (Input.GetKey(KeyCode.T))
-        {
-            Debug.Log("T");
-            throttle -= throttleIncrement;
-        }
-
-        //throttle = 20f;
     }
 
     void Start()
@@ -150,26 +140,28 @@ public class MouvementJoueur : MonoBehaviour
                 newBullet1.transform.Rotate(new Vector3(0, 0, 0));
                 Rigidbody rBullet1 = newBullet1.GetComponent<Rigidbody>();
                 rBullet1.isKinematic = false;
-                rBullet1.velocity = (bullet1_pos.TransformDirection(Vector3.forward) * Bulletspeed);
+                rBullet1.velocity = (bullet1_pos.TransformDirection(Vector3.forward) * Bulletspeed * speed);
 
                 GameObject newBullet2 = Instantiate(rocket, bullet2_pos.position, bullet2_pos.rotation) as GameObject;
                 Rigidbody rBullet2 = newBullet2.GetComponent<Rigidbody>();
                 rBullet2.isKinematic = false;
-                rBullet2.velocity = bullet2_pos.TransformDirection(Vector3.forward) * Bulletspeed;
+                rBullet2.velocity = bullet2_pos.TransformDirection(Vector3.forward) * Bulletspeed * speed;
 
                 rocketSound.Play();
             }
-
-            
         }
     }
 
     private void FixedUpdate()
     {
-        rb.AddForce(transform.forward * maxThrottle * throttle * speed);
-        rb.AddTorque(transform.up * yaw * responseModifier);
-        rb.AddTorque(transform.right * pitch * responseModifier);
-        rb.AddTorque(transform.forward * roll * responseModifier);
+        Debug.Log(pitch);
+        rb.AddForce(transform.forward * maxThrottle * throttle * speed, (ForceMode)mode);
+        //rb.AddTorque(transform.up * yaw * responseModifier * 8f);
+        rb.AddForce(-transform.up * pitch * responseModifier * 10f);
+        rb.AddTorque(transform.up * yaw * responseModifier * 6f);
+        //Quaternion deltaRotation = Quaternion.Euler(new Vector3(pitch*4f, 0, 0));
+        //rb.MoveRotation(deltaRotation);
+        //rb.AddTorque(transform.forward * roll * responseModifier * 4f);
     }
 
     IEnumerator Wait()
@@ -185,7 +177,6 @@ public class MouvementJoueur : MonoBehaviour
             a.SetActive(true);
             yield return new WaitForSeconds(0.5f);
         }
-
         reload = false;
     }
 

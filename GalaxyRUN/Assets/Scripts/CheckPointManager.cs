@@ -79,8 +79,10 @@ public class CheckPointManager : MonoBehaviour
     {
 
         speedEffect.Play(false);
-        mj.GetComponent<MouvementJoueur>().speed *= 11f;
+        mj.GetComponent<MouvementJoueur>().speed /= 10f;
+        mj.GetComponent<MouvementJoueur>().mode = 1;
 
+        StartCoroutine(SpeedDecrementation());
         if (nextCheckpoint == listeCheckPoints.Count - 1)
         {
             other.gameObject.SetActive(false);
@@ -93,5 +95,12 @@ public class CheckPointManager : MonoBehaviour
             nextCheckpoint++;
             listeCheckPoints[nextCheckpoint].SetActive(true);
         }
+    }
+
+    IEnumerator SpeedDecrementation()
+    {
+        yield return new WaitForSeconds(0.5f);
+        mj.GetComponent<MouvementJoueur>().mode = 0;
+        mj.GetComponent<MouvementJoueur>().speed *= 10f;
     }
 }
