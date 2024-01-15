@@ -1527,7 +1527,7 @@ GameObject:
   - component: {fileID: 4981508461130746294}
   m_Layer: 0
   m_Name: Vaisseau5
-  m_TagString: Untagged
+  m_TagString: vaisseau
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0

@@ -6,7 +6,7 @@ using UnityEngine.UI;
 public class CheckPointManager : MonoBehaviour
 {
     [SerializeField] private List<GameObject> listeCheckPoints = new List<GameObject>();
-    [SerializeField] GameObject Respawn;
+    [SerializeField] public static GameObject Respawn;
     [SerializeField] GameObject progressHoldClick;
     int nextCheckpoint = 0;
     Vector3 positionInitiale;
@@ -14,17 +14,15 @@ public class CheckPointManager : MonoBehaviour
     [SerializeField]
     ParticleSystem speedEffect;
 
-    private void Awake()
-    {
-        
-    }
+    public Canvas respawn_text;
+    private bool respawned;
 
     // Start is called before the first frame update
     void Start()
     {
         GameObject new_ship = Ship_Choice.GetSelectedShip();
         string str = new_ship.name;
-        //Debug.Log("ddddddd : "+str);
+        Debug.Log("ddddddd : "+str);
         progressHoldClick = transform.Find(str + "(Clone)/Respawn/prgressHoldClick").gameObject;
         Respawn = transform.Find(str+ "(Clone)/Respawn").gameObject;
 
@@ -38,62 +36,78 @@ public class CheckPointManager : MonoBehaviour
         speedEffect.Stop();
         listeCheckPoints[0].SetActive(true);
 
+        respawn_text.gameObject.SetActive(false);
+
     }
 
     void Update()
     {
 
-        for (int i = 0; i < 20; i++)
+        /*for (int i = 0; i < 20; i++)
         {
             if (Input.GetKeyDown("joystick button " + i))
             {
                 Debug.Log("Button " + i + " was pressed!");
             }
+        }*/
+
+        if(Input.GetKeyDown("joystick button 0") && respawned)
+        {
+            respawn_text.gameObject.SetActive(false);
         }
 
-        float distance = Vector3.Distance(listeCheckPoints[nextCheckpoint].transform.position, gameObject.transform.position);
-        if (distance > 40)
+        if(progressHoldClick.GetComponent<RectTransform>().localScale.x >= (float)0.6)
         {
-            Respawn.SetActive(true);
+            transform.position = listeCheckPoints[nextCheckpoint].transform.position;
+            Respawn.SetActive(false);
+            mj.GetComponent<MouvementJoueur>().enabled = false;
+            respawn_text.gameObject.SetActive(true);
+            respawned = true;
         }
-        /*if (distance > 80 || (float)(progressHoldClick.GetComponent<RectTransform>().localScale.x) >= (float)0.6)
-        {
-            gameObject.transform.position = new Vector3(positionInitiale.x,transform.position.y,positionInitiale.z);
-            Respawn.enabled = false;
-            progressHoldClick.GetComponent<RectTransform>().localScale = new Vector3(0, progressHoldClick.transform.localScale.y, progressHoldClick.transform.localScale.z);
-        }*/
 
         if (Input.GetKey(KeyCode.R) ||Input.GetKey("joystick button 2"))
         {
             progressHoldClick.GetComponent<RectTransform>().localScale += new Vector3((float)0.002, 0, 0);
-
         }
         if (Input.GetKeyUp(KeyCode.R) || Input.GetKeyUp("joystick button 2"))
         {
             progressHoldClick.GetComponent<RectTransform>().localScale = new Vector3(0, progressHoldClick.transform.localScale.y, progressHoldClick.transform.localScale.z);
-
         }
     }
 
     private void OnTriggerEnter(Collider other)
     {
-
-        speedEffect.Play(false);
-        mj.GetComponent<MouvementJoueur>().speed /= 10f;
-        mj.GetComponent<MouvementJoueur>().mode = 1;
-
-        StartCoroutine(SpeedDecrementation());
-        if (nextCheckpoint == listeCheckPoints.Count - 1)
+        if (other.tag == "zone")
         {
-            other.gameObject.SetActive(false);
-            mj.GetComponent<MouvementJoueur>().enabled = false;
+            Respawn.SetActive(true);
         }
         else
         {
-            positionInitiale = listeCheckPoints[nextCheckpoint].transform.position;
-            other.gameObject.SetActive(false);
-            nextCheckpoint++;
-            listeCheckPoints[nextCheckpoint].SetActive(true);
+            speedEffect.Play(false);
+            mj.GetComponent<MouvementJoueur>().speed /= 10f;
+            mj.GetComponent<MouvementJoueur>().mode = 1;
+
+            StartCoroutine(SpeedDecrementation());
+            if (nextCheckpoint == listeCheckPoints.Count - 1)
+            {
+                other.gameObject.SetActive(false);
+                mj.GetComponent<MouvementJoueur>().enabled = false;
+            }
+            else
+            {
+                positionInitiale = listeCheckPoints[nextCheckpoint].transform.position;
+                listeCheckPoints[nextCheckpoint].SetActive(false);
+                nextCheckpoint++;
+                listeCheckPoints[nextCheckpoint].SetActive(true);
+            }
+        }
+    }
+
+    private void OnTriggerExit(Collider other)
+    {
+        if (other.tag == "zone")
+        {
+            Respawn.SetActive(false);
         }
     }
 

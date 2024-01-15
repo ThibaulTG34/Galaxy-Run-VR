@@ -57,13 +57,13 @@ public class MouvementJoueur : MonoBehaviour
         GameObject new_ship = Ship_Choice.GetSelectedShip();
         ship = Instantiate(new_ship, ship.transform.position, ship.transform.rotation);
         ship.transform.parent = gameObject.transform;
-        Debug.Log("apres selection : "+ship.name);
+        Debug.Log("apres selection : " + ship.tag);
         string str = ship.name;
         //Debug.Log("cam_pos : " + transform.Find(str+"/cam_pos").position);
-        Transform cam_pos = transform.Find(str+"/cam_pos");
+        Transform cam_pos = transform.Find(str + "/cam_pos");
         cam.transform.position = cam_pos.position;
-        bullet1_pos = transform.Find(str+"/bullet1_pos");
-        bullet2_pos = transform.Find(str+"/bullet2_pos");
+        bullet1_pos = transform.Find(str + "/bullet1_pos");
+        bullet2_pos = transform.Find(str + "/bullet2_pos");
     }
 
     private void HandleInputs()
@@ -76,7 +76,7 @@ public class MouvementJoueur : MonoBehaviour
     void Start()
     {
         player = GetComponent<CharacterController>();
-        GameObject [] a = GameObject.FindGameObjectsWithTag("ammo");
+        GameObject[] a = GameObject.FindGameObjectsWithTag("ammo");
         foreach (GameObject g in a)
         {
             ammo.Add(g);
@@ -96,14 +96,14 @@ public class MouvementJoueur : MonoBehaviour
 
         HandleInputs();
 
-        if(i == ammo.Count)
+        if (i == ammo.Count)
         {
             reload = true;
             StartCoroutine(Rechargement());
             i = 1;
         }
 
-        if(reload_rocket)
+        if (reload_rocket)
         {
             StartCoroutine(RechargementRocket());
         }
@@ -111,7 +111,7 @@ public class MouvementJoueur : MonoBehaviour
         if (Input.GetKeyDown("joystick button 0") || Input.GetMouseButtonDown(0))
         {
             GameObject objet;
-            if(!ChangeWeapons.swapWeapons && !reload)
+            if (!ChangeWeapons.swapWeapons && !reload)
             {
                 //objet = bullet;
                 ammo[ammo.Count - i].SetActive(false);
@@ -121,31 +121,31 @@ public class MouvementJoueur : MonoBehaviour
                 newBullet1.transform.Rotate(new Vector3(0, 0, 0));
                 Rigidbody rBullet1 = newBullet1.GetComponent<Rigidbody>();
                 rBullet1.isKinematic = false;
-                rBullet1.velocity = (bullet1_pos.TransformDirection(Vector3.forward) * Bulletspeed);
+                rBullet1.velocity = (bullet1_pos.TransformDirection(Vector3.forward) * Bulletspeed * speed / 2.0f);
 
                 GameObject newBullet2 = Instantiate(bullet, bullet2_pos.position, bullet2_pos.rotation) as GameObject;
                 Rigidbody rBullet2 = newBullet2.GetComponent<Rigidbody>();
                 rBullet2.isKinematic = false;
-                rBullet2.velocity = bullet2_pos.TransformDirection(Vector3.forward) * Bulletspeed;
+                rBullet2.velocity = bullet2_pos.TransformDirection(Vector3.forward) * Bulletspeed * speed / 2.0f;
 
                 bulletSound.Play();
             }
-            else if(ChangeWeapons.swapWeapons && !reload_rocket)
+            else if (ChangeWeapons.swapWeapons && !reload_rocket)
             {
                 //objet = rocket;
-                rocket_ammo.GetComponent<RectTransform>().sizeDelta = new Vector2(0,15);
+                rocket_ammo.GetComponent<RectTransform>().sizeDelta = new Vector2(0, 15);
                 reload_rocket = true;
 
                 GameObject newBullet1 = Instantiate(rocket, bullet1_pos.position, bullet1_pos.rotation) as GameObject;
                 newBullet1.transform.Rotate(new Vector3(0, 0, 0));
                 Rigidbody rBullet1 = newBullet1.GetComponent<Rigidbody>();
                 rBullet1.isKinematic = false;
-                rBullet1.velocity = (bullet1_pos.TransformDirection(Vector3.forward) * Bulletspeed * speed);
+                rBullet1.velocity = (bullet1_pos.TransformDirection(Vector3.forward) * Bulletspeed * speed / 2.0f);
 
                 GameObject newBullet2 = Instantiate(rocket, bullet2_pos.position, bullet2_pos.rotation) as GameObject;
                 Rigidbody rBullet2 = newBullet2.GetComponent<Rigidbody>();
                 rBullet2.isKinematic = false;
-                rBullet2.velocity = bullet2_pos.TransformDirection(Vector3.forward) * Bulletspeed * speed;
+                rBullet2.velocity = bullet2_pos.TransformDirection(Vector3.forward) * Bulletspeed * speed / 2.0f;
 
                 rocketSound.Play();
             }
@@ -154,14 +154,13 @@ public class MouvementJoueur : MonoBehaviour
 
     private void FixedUpdate()
     {
-        Debug.Log(pitch);
-        rb.AddForce(transform.forward * maxThrottle * throttle * speed, (ForceMode)mode);
-        //rb.AddTorque(transform.up * yaw * responseModifier * 8f);
-        rb.AddForce(-transform.up * pitch * responseModifier * 10f);
-        rb.AddTorque(transform.up * yaw * responseModifier * 6f);
+        rb.AddForce(transform.forward * maxThrottle * throttle * speed*3f, (ForceMode)mode);
+        rb.AddTorque(transform.up * yaw * responseModifier * 8f);
+        //rb.AddForce(-transform.up * pitch * responseModifier * 10f);
+        rb.AddTorque(transform.right * pitch * responseModifier * 6f);
         //Quaternion deltaRotation = Quaternion.Euler(new Vector3(pitch*4f, 0, 0));
         //rb.MoveRotation(deltaRotation);
-        //rb.AddTorque(transform.forward * roll * responseModifier * 4f);
+        rb.AddTorque(transform.forward * roll * responseModifier * 4f);
     }
 
     IEnumerator Wait()
@@ -181,7 +180,7 @@ public class MouvementJoueur : MonoBehaviour
     }
 
     IEnumerator RechargementRocket()
-    {        
+    {
         yield return new WaitForSeconds(2f);
 
         rocket_ammo.GetComponent<RectTransform>().sizeDelta = new Vector2(60f, 15);
