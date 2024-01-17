@@ -5,9 +5,9 @@ EditorBuildSettings:
   m_ObjectHideFlags: 0
   serializedVersion: 2
   m_Scenes:
-  - enabled: 0
-    path: Assets/Scenes/SampleScene.unity
-    guid: d1c3109bdb54ad54c8a2b2838528e640
+  - enabled: 1
+    path: Assets/Scenes/MENU.unity
+    guid: 0126e5a544fdda042af163998cf1b7a9
   - enabled: 1
     path: Assets/Scenes/ChoixVaisseau.unity
     guid: 59be8e5d83b4b574bbd8d9b888258ff5
@@ -15,8 +15,8 @@ EditorBuildSettings:
     path: Assets/Scenes/Main.unity
     guid: 606ac063c93f19a4c83c956d531af45f
   - enabled: 1
-    path: Assets/Scenes/Instructions.unity
-    guid: 9bd033ae55fc8dc4fbb06d02b60d1271
+    path: Assets/Scenes/Fin.unity
+    guid: 30a1a85331c511a4b8bc38d591d2bbaf
   m_configObjects:
     Unity.XR.Oculus.Settings: {fileID: 11400000, guid: 3150ae9c2fa0f7045919003a11359a31, type: 2}
     com.unity.xr.management.loader_settings: {fileID: 11400000, guid: 6739a0cac49c74743913334689978d8f, type: 2}

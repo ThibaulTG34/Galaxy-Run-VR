@@ -4,6 +4,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using TMPro;
 
 public class MouvementJoueur : MonoBehaviour
 {
@@ -13,8 +14,6 @@ public class MouvementJoueur : MonoBehaviour
     public float gravity = 20f;
     public GameObject cam;
     public float sensi = 30f;
-    private Vector3 mouvement = Vector3.zero;
-    CharacterController player;
 
     public GameObject bullet;
     public GameObject rocket;
@@ -28,38 +27,38 @@ public class MouvementJoueur : MonoBehaviour
     bool reload_rocket = false;
     GameObject rocket_ammo;
 
-    public float throttleIncrement = 0.1f;
     [SerializeField]
-    public float maxThrottle = 200f;
-    public float responsiveness = 10f;
     public float speed = 7f;
-    private float throttle = 25f, pitch, yaw, roll;
+    private float pitch, yaw, roll;
     Rigidbody rb;
 
     [SerializeField]
     GameObject ship;
 
+    [SerializeField]
+    private float AmbientSpeed = 2f;
+    [SerializeField]
+    private float RotationSpeed = 40f;
+
     public int mode;
 
-    private float responseModifier
-    {
-        get
-        {
-            return (rb.mass / 10f) * responsiveness;
-        }
-    }
+    public TMP_Text timer;
+    public static float time;
+
+    public static string minutes;
+    public static string secondes;
 
     void Awake()
     {
         mode = 0;
+        time = 0;
         rb = GetComponent<Rigidbody>();
         Destroy(ship);
         GameObject new_ship = Ship_Choice.GetSelectedShip();
         ship = Instantiate(new_ship, ship.transform.position, ship.transform.rotation);
         ship.transform.parent = gameObject.transform;
-        Debug.Log("apres selection : " + ship.tag);
+        Debug.Log("apres selection : " + ship.name);
         string str = ship.name;
-        //Debug.Log("cam_pos : " + transform.Find(str+"/cam_pos").position);
         Transform cam_pos = transform.Find(str + "/cam_pos");
         cam.transform.position = cam_pos.position;
         bullet1_pos = transform.Find(str + "/bullet1_pos");
@@ -75,7 +74,6 @@ public class MouvementJoueur : MonoBehaviour
 
     void Start()
     {
-        player = GetComponent<CharacterController>();
         GameObject[] a = GameObject.FindGameObjectsWithTag("ammo");
         foreach (GameObject g in a)
         {
@@ -83,16 +81,23 @@ public class MouvementJoueur : MonoBehaviour
         }
 
         rocket_ammo = GameObject.FindGameObjectWithTag("rocket");
+
+
     }
 
     void Update()
     {
-        /*mouvement = new Vector3(Input.GetAxisRaw("Vertical"), 0, -Input.GetAxisRaw("Horizontal"));
-       
-        mouvement = transform.TransformDirection(mouvement);
-        mouvement *= speed;
-        player.gameObject.transform.Rotate(mouvement);
-        player.Move(Vector3.forward * speed);*/
+
+        minutes = ((int)time / 60).ToString();
+        secondes = (time % 60).ToString("N0");
+
+        if((time % 60) < 10)
+            timer.text = minutes + ":0" + secondes;
+        else
+            timer.text = minutes + ":" + secondes;
+
+
+        time += Time.deltaTime; //on decremente le timer
 
         HandleInputs();
 
@@ -121,12 +126,12 @@ public class MouvementJoueur : MonoBehaviour
                 newBullet1.transform.Rotate(new Vector3(0, 0, 0));
                 Rigidbody rBullet1 = newBullet1.GetComponent<Rigidbody>();
                 rBullet1.isKinematic = false;
-                rBullet1.velocity = (bullet1_pos.TransformDirection(Vector3.forward) * Bulletspeed * speed / 2.0f);
+                rBullet1.velocity = (bullet1_pos.TransformDirection(Vector3.forward) * Bulletspeed * speed);
 
                 GameObject newBullet2 = Instantiate(bullet, bullet2_pos.position, bullet2_pos.rotation) as GameObject;
                 Rigidbody rBullet2 = newBullet2.GetComponent<Rigidbody>();
                 rBullet2.isKinematic = false;
-                rBullet2.velocity = bullet2_pos.TransformDirection(Vector3.forward) * Bulletspeed * speed / 2.0f;
+                rBullet2.velocity = bullet2_pos.TransformDirection(Vector3.forward) * Bulletspeed * speed;
 
                 bulletSound.Play();
             }
@@ -140,27 +145,29 @@ public class MouvementJoueur : MonoBehaviour
                 newBullet1.transform.Rotate(new Vector3(0, 0, 0));
                 Rigidbody rBullet1 = newBullet1.GetComponent<Rigidbody>();
                 rBullet1.isKinematic = false;
-                rBullet1.velocity = (bullet1_pos.TransformDirection(Vector3.forward) * Bulletspeed * speed / 2.0f);
+                rBullet1.velocity = (bullet1_pos.TransformDirection(Vector3.forward) * Bulletspeed * speed);
 
                 GameObject newBullet2 = Instantiate(rocket, bullet2_pos.position, bullet2_pos.rotation) as GameObject;
                 Rigidbody rBullet2 = newBullet2.GetComponent<Rigidbody>();
                 rBullet2.isKinematic = false;
-                rBullet2.velocity = bullet2_pos.TransformDirection(Vector3.forward) * Bulletspeed * speed / 2.0f;
+                rBullet2.velocity = bullet2_pos.TransformDirection(Vector3.forward) * Bulletspeed * speed;
 
                 rocketSound.Play();
             }
         }
     }
-
     private void FixedUpdate()
     {
-        rb.AddForce(transform.forward * maxThrottle * throttle * speed*3f, (ForceMode)mode);
-        rb.AddTorque(transform.up * yaw * responseModifier * 8f);
-        //rb.AddForce(-transform.up * pitch * responseModifier * 10f);
-        rb.AddTorque(transform.right * pitch * responseModifier * 6f);
-        //Quaternion deltaRotation = Quaternion.Euler(new Vector3(pitch*4f, 0, 0));
-        //rb.MoveRotation(deltaRotation);
-        rb.AddTorque(transform.forward * roll * responseModifier * 4f);
+
+        Quaternion AddRot = Quaternion.identity;
+        roll = Input.GetAxis("Roll") * (Time.deltaTime * RotationSpeed);
+        pitch = Input.GetAxis("Pitch") * (Time.deltaTime * RotationSpeed);
+        yaw = Input.GetAxis("Yaw") * (Time.deltaTime * RotationSpeed);
+        AddRot.eulerAngles = new Vector3(pitch, yaw, roll);
+        rb.rotation *= AddRot;
+        Vector3 AddPos = Vector3.forward;
+        AddPos = rb.rotation * AddPos;
+        rb.position += AddPos * (AmbientSpeed);
     }
 
     IEnumerator Wait()

@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.SceneManagement;
 
 public class CheckPointManager : MonoBehaviour
 {
@@ -65,11 +66,11 @@ public class CheckPointManager : MonoBehaviour
             respawned = true;
         }
 
-        if (Input.GetKey(KeyCode.R) ||Input.GetKey("joystick button 2"))
+        if (Input.GetKey("joystick button 2"))
         {
             progressHoldClick.GetComponent<RectTransform>().localScale += new Vector3((float)0.002, 0, 0);
         }
-        if (Input.GetKeyUp(KeyCode.R) || Input.GetKeyUp("joystick button 2"))
+        if (Input.GetKeyUp("joystick button 2"))
         {
             progressHoldClick.GetComponent<RectTransform>().localScale = new Vector3(0, progressHoldClick.transform.localScale.y, progressHoldClick.transform.localScale.z);
         }
@@ -92,6 +93,7 @@ public class CheckPointManager : MonoBehaviour
             {
                 other.gameObject.SetActive(false);
                 mj.GetComponent<MouvementJoueur>().enabled = false;
+                SceneManager.LoadScene("Fin");
             }
             else
             {

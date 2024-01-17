@@ -6818,14 +6818,18 @@ MonoBehaviour:
   cam: {fileID: 2969239674130343739}
   sensi: 30
   bullet: {fileID: 2088111250387055944, guid: e1c390ed08861b14799f3d54c41bb27b, type: 3}
+  rocket: {fileID: 0}
   bullet1_pos: {fileID: 0}
   bullet2_pos: {fileID: 0}
   bulletSound: {fileID: 7377972177249693731}
+  rocketSound: {fileID: 0}
+  ammo: []
   throttleIncrement: 0.01
   maxThrottle: 200
   responsiveness: 40
   speed: 7
   ship: {fileID: 0}
+  mode: 0
 --- !u!143 &2527670270570161955
 CharacterController:
   m_ObjectHideFlags: 0
@@ -6867,10 +6871,10 @@ MonoBehaviour:
   listeCheckPoints:
   - {fileID: 0}
   - {fileID: 0}
-  Respawn: {fileID: 0}
   progressHoldClick: {fileID: 0}
   mj: {fileID: 0}
   speedEffect: {fileID: 0}
+  respawn_text: {fileID: 0}
 --- !u!54 &8089277657838005307
 Rigidbody:
   m_ObjectHideFlags: 0

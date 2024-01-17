@@ -15,7 +15,7 @@ public class Fracture : MonoBehaviour
             boom.Play();
             Instantiate(fractured, transform.position, transform.rotation);
             Destroy(collision.gameObject);
-            Destroy(gameObject);
+            //Destroy(gameObject);
         }
     }
 }
