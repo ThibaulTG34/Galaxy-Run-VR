@@ -34,7 +34,7 @@ public class CheckPointManager : MonoBehaviour
         {
             listeCheckPoints[i].SetActive(false);
         }
-        speedEffect.Stop();
+        speedEffect.Stop(true);
         listeCheckPoints[0].SetActive(true);
 
         respawn_text.gameObject.SetActive(false);
@@ -84,7 +84,7 @@ public class CheckPointManager : MonoBehaviour
         }
         else
         {
-            speedEffect.Play(false);
+            speedEffect.Play(true);
             mj.GetComponent<MouvementJoueur>().speed /= 10f;
             mj.GetComponent<MouvementJoueur>().mode = 1;
 

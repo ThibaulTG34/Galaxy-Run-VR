@@ -11,6 +11,7 @@ TagManager:
   - rocket
   - zone
   - vaisseau
+  - explosion
   layers:
   - Default
   - TransparentFX

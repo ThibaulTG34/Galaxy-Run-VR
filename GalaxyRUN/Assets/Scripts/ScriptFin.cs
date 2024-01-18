@@ -9,9 +9,11 @@ public class ScriptFin : MonoBehaviour
     public TMP_Text text_fin;
     void Start()
     {
-        Vector3 pos = new(0f, -76.9000015f, 511.200012f);
+        Vector3 pos = new(12f, 142f, -104f);
         GameObject new_ship = Ship_Choice.GetSelectedShip();
         ship = Instantiate(new_ship, pos, Quaternion.identity);
+        ship.transform.localScale *= 23f;
+        ship.transform.Rotate(0, 45, 0);
     }
 
     void Update()

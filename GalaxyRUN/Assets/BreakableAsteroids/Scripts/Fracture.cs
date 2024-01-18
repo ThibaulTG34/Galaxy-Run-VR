@@ -8,6 +8,11 @@ public class Fracture : MonoBehaviour
     public GameObject fractured;
     public AudioSource boom;
 
+    private void Start()
+    {
+        boom = GameObject.FindGameObjectWithTag("explosion").GetComponent<AudioSource>();
+    }
+
     public void OnCollisionEnter(Collision collision)
     {
         if(collision.gameObject.CompareTag("bullet"))
@@ -15,7 +20,7 @@ public class Fracture : MonoBehaviour
             boom.Play();
             Instantiate(fractured, transform.position, transform.rotation);
             Destroy(collision.gameObject);
-            //Destroy(gameObject);
+            Destroy(gameObject);
         }
     }
 }

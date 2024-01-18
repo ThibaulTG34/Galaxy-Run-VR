@@ -7,6 +7,7 @@ public class decompteScript : MonoBehaviour
     public static int nb = 3;
     public TMP_Text decompte;
     public GameObject mj;
+    public AudioSource main;
 
     private void Start()
     {
@@ -23,6 +24,7 @@ public class decompteScript : MonoBehaviour
         {
             decompte.text = "Go !";
             mj.GetComponent<MouvementJoueur>().enabled = true;
+            main.volume = 0.7f;
             //Destroy(gameObject);
         }
 

@@ -97,7 +97,7 @@ public class MouvementJoueur : MonoBehaviour
             timer.text = minutes + ":" + secondes;
 
 
-        time += Time.deltaTime; //on decremente le timer
+        time += Time.deltaTime;
 
         HandleInputs();
 
