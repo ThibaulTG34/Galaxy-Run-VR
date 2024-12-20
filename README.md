@@ -8,3 +8,6 @@ Pour jouer au jeu, vous devez avoir :
 
 ## Jouer au jeu
 Vous avez un dossier Build dans le projet. Dans celui-ci, vous trouverez un executable nommé *GalaxyRUN*. Ouvrez le et amusez vous.
+
+## Démo
+Une vidéo de démonstration est disponible sur mon portfolio : https://portfoliothibault.cms.webnode.fr/copie-de-escape-game-sur-unity/
